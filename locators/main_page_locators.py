@@ -1,0 +1,21 @@
+from selenium.webdriver.common.by import By
+
+class MainPageLocators:
+    LOGIN_BUTTON = (By.XPATH, "//button[text()='Войти в аккаунт']")
+    CONSTRUCTOR_BUTTON = (By.XPATH, "//p[text()='Конструктор']/..")
+    ORDER_BUTTON = (By.XPATH, "//p[text()='Лента Заказов']/..")
+    PROFILE_BUTTON = (By.XPATH, "//p[text()='Личный Кабинет']/..")
+    INGREDIENT_ITEM = (By.XPATH, "//a[contains(@class, 'BurgerIngredient_ingredient__')]")
+    INGREDIENT_MODAL = (By.CSS_SELECTOR, "[class*='Modal_modal__contentBox__'], [class*='Modal_modal__']")
+    INGREDIENT_MODAL_HEADER = (By.CSS_SELECTOR, "[class*='Modal_modal__title']")
+    INGREDIENT_MODAL_CLOSE_BUTTON = (By.XPATH, "//div[contains(@class, 'Modal_modal__container')]//button[contains(@class, 'close')] | //div[contains(@class, 'Modal_modal__')]//button[.//svg[contains(@viewBox, '24') or contains(@viewBox, '20')]]")
+    INGREDIENT_COUNTER = (By.XPATH, ".//p[contains(@class,'counter_counter__num')]")
+    CREATE_ORDER_BUTTON = (By.XPATH, "//button[text()='Оформить заказ']")
+    ORDER_MODAL = (By.XPATH, "//section[@class='Modal_modal_opened__3ISw4 Modal_modal__P3_V5']//div[@class='Modal_modal__container__Wo2l_']")
+    ORDER_NUMBER_MODAL = (By.XPATH, "//div[@class='Modal_modal__container__Wo2l_']//h2")
+    ORDER_MODAL_CLOSE_BUTTON = (By.XPATH, "//section[@class='Modal_modal_opened__3ISw4 Modal_modal__P3_V5']//button[@class='Modal_modal__close_modified__3V5XS Modal_modal__close__TnseK']")
+    CONSTRUCTOR_SECTION = (By.CSS_SELECTOR, "[class*='BurgerConstructor_burgerConstructor__']")
+    BUNS_SECTION = (By.XPATH, "//span[text()='Булки']/..")
+    SAUCES_SECTION = (By.XPATH, "//span[text()='Соусы']/..")
+    FILLINGS_SECTION = (By.XPATH, "//span[text()='Начинки']/..")
+    DROP_AREA = (By.CSS_SELECTOR, "[class*='BurgerConstructor_basket__']")
