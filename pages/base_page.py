@@ -2,7 +2,7 @@ import random
 import allure
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
 
 class BasePage:
     def __init__(self, driver):
@@ -38,8 +38,7 @@ class BasePage:
         element.click()
     
     @allure.step("Клик по элементу с помощью скрипта")    
-    def click_to_element_with_script(self, locator):
-        element = self.wait_and_find_element(locator)
+    def click_to_element_with_script(self, element):
         self.driver.execute_script("arguments[0].click();", element)
     
     @allure.step("Получаем текст из элемента")    
@@ -63,6 +62,24 @@ class BasePage:
     def get_current_url(self):
         return self.driver.current_url
     
+    @allure.step("Ожидание загрузки страницы")
+    def wait_for_page_load(self, timeout=10):
+        WebDriverWait(self.driver, timeout).until(
+            lambda d: d.execute_script("return document.readyState") == "complete"
+        )
+    
+    @allure.step("Ожидание изменения URL")
+    def wait_for_url_change(self, expected_url, timeout=10):
+        WebDriverWait(self.driver, timeout).until(
+            lambda d: d.current_url == expected_url
+        )
+    
+    @allure.step("Ожидание закрытия модального окна")
+    def wait_for_modal_close(self, locator, timeout=5):
+        WebDriverWait(self.driver, timeout).until_not(
+            EC.visibility_of_element_located(locator)
+        )
+    
     @allure.step("Проверка элемента на видимость")
     def is_element_visible(self, locator, timeout=5):
         try:
@@ -72,6 +89,7 @@ class BasePage:
         except:
             return False
     
+    @allure.step("Проверка наличия элемента")
     def is_element_present(self, locator, timeout=5):
         try:
             wait = WebDriverWait(self.driver, timeout)
@@ -89,6 +107,16 @@ class BasePage:
     def get_attribute_value(self, locator, attribute):
         element = self.wait_and_find_element(locator)
         return element.get_attribute(attribute)
+    
+    @allure.step("Перетаскивание элемента")
+    def drag_and_drop(self, source_element, target_element):
+        browser_name = self.driver.capabilities.get('browserName', '').lower()
+        
+        if browser_name == 'firefox':
+            self._drag_and_drop_firefox(source_element, target_element)
+        else:
+            action = ActionChains(self.driver)
+            action.click_and_hold(source_element).move_to_element(target_element).release().perform()
     
     @allure.step("Перетаскивание элемента (Firefox)")
     def _drag_and_drop_firefox(self, source_element, target_element):

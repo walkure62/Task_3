@@ -23,6 +23,7 @@ class LoginPage(BasePage):
     @allure.step("Клик по кнопке 'Восстановить пароль'")
     def click_restore_password_button(self):
         self.click_to_element(self.locators.RESTORE_PASSWORD_BUTTON)
+        self.wait_for_url_change(Urls.FORGOT_PASSWORD_URL)
     
     @allure.step("Авторизация пользователя")
     def login(self, email, password):
@@ -32,4 +33,4 @@ class LoginPage(BasePage):
     
     @allure.step("Проверка что находимся на странице входа")
     def is_login_page(self):
-        return self.get_current_url() == f"{Urls.BASE_URL}/login"
+        return self.get_current_url() == Urls.LOGIN_URL

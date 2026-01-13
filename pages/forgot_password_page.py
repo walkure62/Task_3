@@ -1,9 +1,7 @@
 import allure
-import time
 from pages.base_page import BasePage
 from locators.forgot_password_page_locators import ForgotPasswordPageLocators
 from data import Urls
-from selenium.webdriver.support.ui import WebDriverWait
 
 class ForgotPasswordPage(BasePage):
     def __init__(self, driver):
@@ -20,16 +18,13 @@ class ForgotPasswordPage(BasePage):
     
     @allure.step("Клик по кнопке 'Восстановить'")
     def click_restore_button(self):
+        self.wait_for_element_to_be_clickable(self.locators.RESTORE_BUTTON, timeout=5)
         self.click_to_element(self.locators.RESTORE_BUTTON)
-        try:
-            WebDriverWait(self.driver, 10).until(
-                self.is_element_present(self.locators.PASSWORD_INPUT, timeout=2)
-            )
-        except:
-            time.sleep(2)
+        self.wait_for_url_change(Urls.RESET_PASSWORD_URL)
     
     @allure.step("Клик по кнопке показать/скрыть пароль")
     def click_show_password_button(self):
+        self.wait_for_element_to_be_clickable(self.locators.SHOW_PASSWORD_BUTTON, timeout=5)
         self.click_to_element(self.locators.SHOW_PASSWORD_BUTTON)
     
     @allure.step("Проверка активности поля ввода пароля")
@@ -38,12 +33,9 @@ class ForgotPasswordPage(BasePage):
     
     @allure.step("Проверка подсветки поля ввода пароля")
     def is_password_field_highlighted(self):
-        try:
-            password_input = self.wait_and_find_element(self.locators.PASSWORD_INPUT_ACTIVE, timeout=3)
-            class_attr = password_input.get_attribute("class")
-            return "input_status_active" in class_attr or self.is_element_present(self.locators.PASSWORD_INPUT_ACTIVE, timeout=1)
-        except:
-            return False
+        password_input = self.wait_and_find_element(self.locators.PASSWORD_INPUT_ACTIVE, timeout=3)
+        class_attr = password_input.get_attribute("class")
+        return "input_status_active" in class_attr or self.is_element_present(self.locators.PASSWORD_INPUT_ACTIVE, timeout=1)
     
     @allure.step("Проверка что находимся на странице восстановления пароля")
     def is_forgot_password_page(self):

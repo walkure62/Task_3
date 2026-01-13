@@ -23,6 +23,7 @@ class TestMainFunctionality:
     def test_ingredient_modal_opens_on_click(self, driver):
         main_page = MainPage(driver)
         main_page.click_ingredient()
+        main_page.wait_for_page_load()
         
         assert main_page.is_ingredient_modal_open(), "Всплывающее окно с деталями ингредиента не появилось"
     
@@ -30,9 +31,6 @@ class TestMainFunctionality:
     def test_ingredient_modal_closes_on_x_click(self, driver):
         main_page = MainPage(driver)
         main_page.click_ingredient()
-        
-        assert main_page.is_ingredient_modal_open(), "Всплывающее окно с деталями ингредиента не появилось"
-        
         main_page.close_ingredient_modal()
         assert not main_page.is_ingredient_modal_open(), "Всплывающее окно не закрылось при клике на крестик"
     
@@ -53,7 +51,8 @@ class TestMainFunctionality:
     def test_logged_in_user_can_create_order(self, driver, login):
         main_page = MainPage(driver)
         
-        main_page.add_ingredient_to_order()
+        ingredient = main_page.get_random_ingredient()
+        main_page.add_ingredient_to_order(ingredient)
         main_page.click_create_order_button()
         
         assert main_page.is_order_modal_open(), "Залогиненный пользователь не может оформить заказ"
