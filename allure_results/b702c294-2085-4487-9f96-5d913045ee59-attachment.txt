@@ -1,0 +1,1 @@
+Пользователь с токеном Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NjY5NDNkOTg0MjcwMDAxYmUzNDZhNCIsImlhdCI6MTc2ODMzMDMwMSwiZXhwIjoxNzY4MzMxNTAxfQ.rkFA9NDjCLXwiRzJF7ahtWA199GkU--7ryJLyeFhGgM удален
